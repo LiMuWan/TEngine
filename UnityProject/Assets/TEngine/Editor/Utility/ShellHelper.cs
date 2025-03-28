@@ -127,7 +127,7 @@ namespace TEngine.Editor
                     {
                         if (args.Data != null)
                         {
-                            UnityEngine.Debug.Log($"[Process Output]: {args.Data}");
+                            UnityEngine.Debug.Log($"[Process Output:] {args.Data}");
                         }
                     };
                     process.ErrorDataReceived += (_, args) =>

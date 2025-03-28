@@ -1,0 +1,3 @@
+<linker>
+       <assembly fullname="SqlCipher4Unity3D" preserve="all"/>
+</linker>

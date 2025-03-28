@@ -13,7 +13,8 @@ namespace GameLogic
         #region Propreties
 
         private System.Action<UIWindow> _prepareCallback;
-
+        private System.Action<UIWindow> _onCloseCallback;
+        public System.Action<UIWindow> OnCloseCallback => _onCloseCallback;
         private bool _isCreate = false;
 
         private GameObject _panel;
@@ -79,6 +80,31 @@ namespace GameLogic
         
         public int HideTimerId { get; set; }
 
+        private string[] _defaultLayers = { "UISelectServer","UIAccount","UIMain","UIFirstGift"};
+        
+        /// <summary>
+        /// 自定义数据。
+        /// </summary>
+        public System.Object UserData
+        {
+            get
+            {
+                if (_userDatas != null && _userDatas.Length >= 1)
+                {
+                    return _userDatas[0];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 自定义数据集。
+        /// </summary>
+        public System.Object[] UserDatas => _userDatas;
+
         /// <summary>
         /// 窗口深度值。
         /// </summary>
@@ -117,6 +143,7 @@ namespace GameLogic
                         {
                             depth += 5; //注意递增值
                             canvas.sortingOrder = depth;
+                            canvas.sortingLayerName = "UI";
                         }
                     }
 
@@ -358,6 +385,8 @@ namespace GameLogic
 
         internal void InternalDestroy(bool isShutDown = false)
         {
+            this._onCloseCallback?.Invoke(this);
+            this._onCloseCallback = null;
             _isCreate = false;
 
             RemoveAllUIEvent();
@@ -421,7 +450,7 @@ namespace GameLogic
 
             _canvas.overrideSorting = true;
             _canvas.sortingOrder = 0;
-            _canvas.sortingLayerName = "Default";
+            _canvas.sortingLayerName = "UI";
 
             // 获取组件
             _raycaster = _panel.GetComponent<GraphicRaycaster>();
@@ -451,6 +480,16 @@ namespace GameLogic
                 ModuleSystem.GetModule<ITimerModule>().RemoveTimer(HideTimerId);
                 HideTimerId = 0;
             }
+        }
+
+        public void AddOnCloseListener(Action<UIWindow> onCloseHandler)
+        {
+            this._onCloseCallback += onCloseHandler;
+        }
+        
+        public void RemoveOnCloseListener()
+        {
+            this._onCloseCallback = null;
         }
     }
 }

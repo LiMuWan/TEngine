@@ -206,6 +206,31 @@ namespace GameLogic
 
             return lastOne.WindowName;
         }
+        
+        public T GetTopWindow<T>(int layer, Func<UIWindow, T> selector)
+        {
+            if (selector == null)
+            {
+                throw new ArgumentNullException(nameof(selector), "Selector function cannot be null.");
+            }
+
+            UIWindow lastOne = null;
+            for (int i = 0; i < _uiStack.Count; i++)
+            {
+                if (_uiStack[i].WindowLayer == layer)
+                    lastOne = _uiStack[i];
+            }
+
+            if (lastOne == null)
+            {
+                // Return the default value of T (e.g., null for reference types, zero for numeric types, etc.)
+                return default(T);
+            }
+
+            // Use the selector function to determine what to return for the specified top window
+            return selector(lastOne);
+        }
+
 
         /// <summary>
         /// 是否有任意窗口正在加载。
@@ -241,7 +266,17 @@ namespace GameLogic
         {
             return IsContains(type.FullName);
         }
-
+        
+        public bool HasWindow(string ui_name)
+        {
+            return IsContains(ui_name);
+        }
+        
+        public T GetWindow<T>() where T : UIWindow
+        {
+            return GetWindow(typeof(T).FullName) as T;
+        }
+        
        /// <summary>
         /// 异步打开窗口。
         /// </summary>
@@ -375,6 +410,11 @@ namespace GameLogic
         public void CloseUI(Type type)
         {
             string windowName = type.FullName;
+            CloseUI(windowName);
+        }
+
+        public void CloseUI(string windowName)
+        {
             UIWindow window = GetWindow(windowName);
             if (window == null)
                 return;
@@ -455,16 +495,57 @@ namespace GameLogic
         /// </summary>
         public void CloseAllWithOut<T>() where T : UIWindow
         {
+            List<UIWindow> windowsToClose = new List<UIWindow>();
+    
+            // 收集需要关闭的窗口
             for (int i = _uiStack.Count - 1; i >= 0; i--)
             {
                 UIWindow window = _uiStack[i];
-                if (window.GetType() == typeof(T))
+                if (window.GetType() != typeof(T))
+                {
+                    windowsToClose.Add(window);
+                }
+            }
+
+            // 关闭所有收集到的窗口
+            foreach (var window in windowsToClose)
+            {
+                window.InternalDestroy();
+                _uiStack.Remove(window);
+            }
+        }
+
+        
+        /// <summary>
+        /// 关闭所有窗口，除了指定类型的窗口。
+        /// </summary>
+        /// <param name="exceptions">不关闭的窗口类型列表。</param>
+        public void CloseAllWithOut(params Type[] exceptions)
+        {
+            // 将 exceptions 转换为 HashSet 提高查找效率
+            HashSet<Type> exceptionSet = new HashSet<Type>(exceptions);
+            List<UIWindow> windowsToClose = new List<UIWindow>();
+
+            // 收集需要关闭的窗口
+            for (int i = _uiStack.Count - 1; i >= 0; i--)
+            {
+                UIWindow window = _uiStack[i];
+
+                // 如果窗口的类型在例外列表中，则跳过关闭
+                if (exceptionSet.Contains(window.GetType()))
                 {
                     continue;
                 }
 
+                // 收集待关闭窗口
+                windowsToClose.Add(window);
+            }
+
+            // 关闭所有收集到的窗口
+            foreach (var window in windowsToClose)
+            {
                 window.InternalDestroy();
-                _uiStack.RemoveAt(i);
+                _uiStack.Remove(window);
             }
         }
 

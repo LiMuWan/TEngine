@@ -13,6 +13,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.demigiant.dotween": {
+      "version": "file:Demigiant/DOTween",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.netpyoung.sqlcipher4unity3d": {
       "version": "file:com.netpyoung.sqlcipher4unity3d",
       "depth": 0,

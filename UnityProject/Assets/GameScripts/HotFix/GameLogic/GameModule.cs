@@ -11,7 +11,11 @@ public class GameModule
     /// </summary>
     public static RootModule Base
     {
+#if UNITY_6000_0_OR_NEWER
+        get => _base ??= Object.FindFirstObjectByType<RootModule>();
+#else
         get => _base ??= Object.FindObjectOfType<RootModule>();
+#endif
         private set => _base = value;
     }
 
@@ -82,10 +86,11 @@ public class GameModule
     /// 获取本地化模块。
     /// </summary>
     public static ILocalizationModule Localization => _localization ??= Get<ILocalizationModule>();
-    
+
     private static ILocalizationModule _localization;
+
     #endregion
-    
+
     /// <summary>
     /// 获取游戏框架模块类。
     /// </summary>
@@ -99,11 +104,11 @@ public class GameModule
 
         return module;
     }
-    
+
     public static void Shutdown()
     {
         Log.Info("GameModule Shutdown");
-            
+
         _base = null;
         _debugger = null;
         _fsm = null;

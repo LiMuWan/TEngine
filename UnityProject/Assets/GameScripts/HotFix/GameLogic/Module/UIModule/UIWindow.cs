@@ -81,29 +81,6 @@ namespace GameLogic
         public int HideTimerId { get; set; }
 
         private string[] _defaultLayers = { "UISelectServer","UIAccount","UIMain","UIFirstGift"};
-        
-        /// <summary>
-        /// 自定义数据。
-        /// </summary>
-        public System.Object UserData
-        {
-            get
-            {
-                if (_userDatas != null && _userDatas.Length >= 1)
-                {
-                    return _userDatas[0];
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 自定义数据集。
-        /// </summary>
-        public System.Object[] UserDatas => _userDatas;
 
         /// <summary>
         /// 窗口深度值。

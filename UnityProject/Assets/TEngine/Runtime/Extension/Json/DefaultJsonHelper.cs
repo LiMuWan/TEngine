@@ -1,5 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace TEngine
 {
@@ -15,7 +16,7 @@ namespace TEngine
         /// <returns>序列化后的 JSON 字符串。</returns>
         public string ToJson(object obj)
         {
-            return JsonUtility.ToJson(obj);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
         }
 
         /// <summary>
@@ -26,7 +27,7 @@ namespace TEngine
         /// <returns>反序列化后的对象。</returns>
         public T ToObject<T>(string json)
         {
-            return JsonUtility.FromJson<T>(json);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
         }
 
         /// <summary>
@@ -35,9 +36,37 @@ namespace TEngine
         /// <param name="objectType">对象类型。</param>
         /// <param name="json">要反序列化的 JSON 字符串。</param>
         /// <returns>反序列化后的对象。</returns>
-        public object ToObject(Type objectType, string json)
+        public object ToObject(System.Type objectType, string json)
         {
-            return JsonUtility.FromJson(json, objectType);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject(json, objectType);
+        }
+        
+        public Dictionary<int, T> ParseDictionary<T>(string json) where T : class
+        {
+            var jsonObject = JObject.Parse(json);
+            var dict = new Dictionary<int, T>();
+
+            foreach (var kvp in jsonObject)
+            {
+                T item = JsonConvert.DeserializeObject<T>(kvp.Value.ToString());
+                dict.Add(int.Parse(kvp.Key), item);
+            }
+
+            return dict;
+        }
+
+        public Dictionary<string, T> ParseStringDictionary<T>(string json) where T : class
+        {
+            var jsonObject = JObject.Parse(json);
+            var dict = new Dictionary<string, T>();
+
+            foreach (var kvp in jsonObject)
+            {
+                T item = JsonConvert.DeserializeObject<T>(kvp.Value.ToString());
+                dict.Add(kvp.Key, item);
+            }
+
+            return dict;
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using GameLogic;
 using TEngine;
-using Object = UnityEngine.Object;
 
 public class GameModule
 {
@@ -11,11 +10,7 @@ public class GameModule
     /// </summary>
     public static RootModule Base
     {
-#if UNITY_6000_0_OR_NEWER
-        get => _base ??= Object.FindFirstObjectByType<RootModule>();
-#else
-        get => _base ??= Object.FindObjectOfType<RootModule>();
-#endif
+        get => _base ??= Utility.Unity.FindObjectOfType<RootModule>();
         private set => _base = value;
     }
 

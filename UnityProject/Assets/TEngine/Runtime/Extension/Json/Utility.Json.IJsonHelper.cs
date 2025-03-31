@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TEngine
 {
@@ -33,6 +34,23 @@ namespace TEngine
                 /// <param name="json">要反序列化的 JSON 字符串。</param>
                 /// <returns>反序列化后的对象。</returns>
                 object ToObject(Type objectType, string json);
+                
+                /// <summary>
+                /// 将 JSON 字符串解析为字典。
+                /// </summary>
+                /// <typeparam name="T">字典值的类型。</typeparam>
+                /// <param name="json">要解析的 JSON 字符串。</param>
+                /// <returns>解析后的字典。</returns>
+                Dictionary<int, T> ParseDictionary<T>(string json) where T : class;
+                
+                /// <summary>
+                /// 将 JSON 字符串解析为字典。
+                /// </summary>
+                /// <typeparam name="T">字典值的类型。</typeparam>
+                /// <param name="json">要解析的 JSON 字符串。</param>
+                /// <returns>解析后的字典。</returns>
+                Dictionary<string, T> ParseStringDictionary<T>(string json) where T : class;
+
             }
         }
     }

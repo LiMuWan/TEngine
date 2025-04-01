@@ -2,7 +2,7 @@
 WORKSPACE=..
 
 GEN_CLIENT=${WORKSPACE}/Tools/Luban.ClientServer/Luban.ClientServer.dll
-CONF_ROOT=${WORKSPACE}/DesignerConfigs
+CONF_ROOT=${WORKSPACE}/Configs
 
 OUTPUT_CODE_PATH=${WORKSPACE}/../UnityProject/Assets/GameScripts/HotFix/HotFixCommon/LubanConfig
 OUTPUT_DATA_PATH=${WORKSPACE}/../UnityProject/Assets/AssetRaw/Configs

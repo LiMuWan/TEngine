@@ -10,3 +10,4 @@ sh ${LUBANCOM}gen_code_bin.sh
 echo ======== Start gen version file. ========
 dotnet ${GEN_CONFIGVERSION} --input_data_dir ${INPUT_DATA_DIR} --output_version_dir ${OUTPUT_VERSION_DIR}
 echo ======== End gen version file. ========
+read -r

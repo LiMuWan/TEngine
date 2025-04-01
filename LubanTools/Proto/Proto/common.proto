@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package msg;
+option go_package = "./csmsg";
+
+// 逻辑服心跳包
+message HeartC2S {
+
+}
+
+message HeartS2C {
+	int64 now  = 1;
+}
+
+enum KickReason {
+	ReasonInitiative = 0;
+	ReasonLoginFailed = 1;
+	ReasonLoadingFailed = 2;
+	ReasonForbidden = 3; //封号禁止登陆
+	ReasonKickOutByOther = 4; //重复登陆
+	ReasonVersionUp = 5;//版本热更新
+}
+
+message KickS2C {
+	int32 reason = 1;  //	 4:重复登陆 5:版本热更新，客户端主动断网，走重连、不弹提示
+}
+
+message ResultS2C {
+	int32 errorCode = 1;
+}
+
+message GetServerTimeC2S {
+}
+
+message GetServerTimeS2C {
+	int32 now = 1;
+}
+

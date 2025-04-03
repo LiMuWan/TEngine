@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace GameLogic
 {
-    public class SocketModule :Singleton<UIModule>, IUpdate
+    public class SocketModule :Singleton<SocketModule>, IUpdate
     {
         private static NetworkPeer _gamePeer;
 

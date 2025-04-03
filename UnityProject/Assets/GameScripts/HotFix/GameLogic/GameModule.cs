@@ -62,6 +62,12 @@ public class GameModule
     public static UIModule UI => _ui ??= UIModule.Instance;
 
     private static UIModule _ui;
+    
+    /// <summary>
+    /// 获取Socket模块
+    /// </summary>
+    public static SocketModule Socket => _socket = SocketModule.Instance;
+    private static SocketModule _socket;
 
     /// <summary>
     /// 获取场景模块。
@@ -84,6 +90,9 @@ public class GameModule
 
     private static ILocalizationModule _localization;
 
+    public static ConfigModule ConfigModule => ConfigModule.Instance;
+    private static ConfigModule _configModule;
+    
     #endregion
 
     /// <summary>

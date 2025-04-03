@@ -26,8 +26,10 @@ public partial class GameApp
         StartGameLogic();
     }
     
-    private static void StartGameLogic()
+    private static async void StartGameLogic()
     {
+        GameModule.ConfigModule.Active();
+        Log.Info(GameModule.ConfigModule.Tables.TbCodeInfo);
         GameEvent.Get<ILoginUI>().ShowLoginUI();
         GameModule.UI.ShowUIAsync<BattleMainUI>();
     }

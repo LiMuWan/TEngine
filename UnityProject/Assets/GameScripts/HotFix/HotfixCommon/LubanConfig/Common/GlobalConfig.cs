@@ -77,6 +77,7 @@ public sealed partial class GlobalConfig :  Bright.Config.BeanBase
 
     public  void TranslateText(System.Func<string, string, string> translator)
     {
+        
     }
 
     public override string ToString()

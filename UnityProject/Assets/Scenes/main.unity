@@ -279,6 +279,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6697614230421034925, guid: e38c712e7904fdf42bd0458b769718dd, type: 3}
+      propertyPath: allLanguage.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7696541953913300371, guid: e38c712e7904fdf42bd0458b769718dd, type: 3}
       propertyPath: activeWindow
       value: 3

@@ -26,7 +26,7 @@ public partial class GameApp
         StartGameLogic();
     }
     
-    private static async void StartGameLogic()
+    private static  void StartGameLogic()
     {
         GameModule.ConfigModule.Active();
         Log.Info(GameModule.ConfigModule.Tables.TbCodeInfo);

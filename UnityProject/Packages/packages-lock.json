@@ -29,6 +29,13 @@
       "source": "local",
       "dependencies": {}
     },
+    "com.gilzoide.safe-area-layout": {
+      "version": "https://github.com/gilzoide/unity-safe-area-layout.git#1.0.2",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "647b3ea0706fb3ff7684dc524c2fba9a62ec7452"
+    },
     "com.netpyoung.sqlcipher4unity3d": {
       "version": "file:com.netpyoung.sqlcipher4unity3d",
       "depth": 0,
